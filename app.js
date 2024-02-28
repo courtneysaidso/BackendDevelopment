@@ -14,11 +14,11 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/status', (req, res) => {
-    res.send('The port is 3000');
+    res.send('The port is ${3000}.');
 });
 
 app.get('/error', (req, res) => {
-    res.send('Oops! We hit a snag!')
+    res.status(500).send("Something went wrong.");
 });
 
 app.get ('/email-list/:email', (req, res) => {
