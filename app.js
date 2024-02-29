@@ -2,6 +2,7 @@
 const express = require('express');
 
 //imports <- other files in project
+const list = require("./agents")
 
 // configuration
 const app = express();
@@ -14,15 +15,20 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/status', (req, res) => {
-    res.send('The port is ${3000}.');
+    res.send(`The port is ${port}.`);
 });
 
 app.get('/error', (req, res) => {
     res.status(500).send("Something went wrong.");
 });
 
-app.get ('/email-list/:email', (req, res) => {
-    res.send(req.params.email);
+app.get ('/email-list', (req, res) => {
+    //loop through array to find email
+    //save email into new variable, separated by comma
+    //add new variable into res.send
+
+
+    res.send('testing');
 });
 // feedback
 app.listen(3000, () => {
