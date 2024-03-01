@@ -45,20 +45,22 @@ app.get('/region-avg', (req, res) => {
     console.log(agentFees);
     
     // apply math for avg rating and fees
-    const ratingSum = agentRatings.reduce((agent, sum) => sum + (agent.rating), 0);
+    const ratingSum = agentRatings.reduce((sum, rating) => sum + rating, 0);
     console.log(ratingSum);
-    const feeSum = agentFees.reduce((agent, sum) => Number(sum + (agent.fee), 0));
-console.log(agentFees);
-    const avgRating = Number(ratingSum) / Number(agentRatings.length);
+    const feeSum = agentFees.reduce((sum, fee) => sum + fee, 0);
+console.log(feeSum);
+    const avgRating = ratingSum / agentRatings.length;
     console.log(avgRating);
-    const avgFee = Number(feeSum) / Number(agentFees.length);
+    const avgFee = feeSum / agentFees.length;
     console.log(avgFee);
     //send out
     res.status(200).json({
-        "Average Rating": Number(avgRating),
-        "Average Fee": Number(avgFee)
+        "Average Rating": avgRating,
+        "Average Fee": avgFee
     });
 });
+
+//
 // feedback
 app.listen(3000, () => {
   console.log(` server listening on port ${3000} `)
