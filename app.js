@@ -37,22 +37,26 @@ app.get('/region-avg', (req, res) => {
     //get region rating for agents in region
     const listOfAgents = list.agentList;
     // find agents in region
-    const agentByRegion = list.agentList.map(agent => agent.region === selectedRegion);
+    const agentsByRegion = list.agentList.map(agent => agent.region === selectedRegion);
     //get list of rating and fees for agents in selectedRegion
     const agentRatings = listOfAgents.map(agent => agent.rating)
     const agentFees = listOfAgents.map(agent => agent.fee);
+    console.log(agentRatings);
+    console.log(agentFees);
     
     // apply math for avg rating and fees
-    const ratingSum = agentRatings.reduce((agent, sum) => sum + Number(agent, rating), 0);
-    const feeSum = agentFees.reduce((agent, sum) => sum + Number(agent, fee), 0);
-
-    const avgRating = ratingSum / agentRatings.length;
-    const avgFee = feeSum / agentFees.length;
-    
+    const ratingSum = agentRatings.reduce((agent, sum) => sum + (agent.rating), 0);
+    console.log(ratingSum);
+    const feeSum = agentFees.reduce((agent, sum) => Number(sum + (agent.fee), 0));
+console.log(agentFees);
+    const avgRating = Number(ratingSum) / Number(agentRatings.length);
+    console.log(avgRating);
+    const avgFee = Number(feeSum) / Number(agentFees.length);
+    console.log(avgFee);
     //send out
     res.status(200).json({
-        "Average Rating": avgRating,
-        "Average Fee": avgFee
+        "Average Rating": Number(avgRating),
+        "Average Fee": Number(avgFee)
     });
 });
 // feedback
