@@ -3,6 +3,7 @@ const express = require('express');
 
 //imports <- other files in project
 const list = require("./agents")
+const { calculateElevatorCost } = require('./agents');
 
 // configuration
 const app = express();
@@ -60,7 +61,36 @@ console.log(feeSum);
     });
 });
 
-//
+//elevators calculations //
+app.get('/calc-res', (req, res) => {
+    const apartments = parseInt(req.query.apartments, 10);
+    const floors = parseInt(req.query.floors, 10);
+    const tier = req.query.tier;
+    console.log(`apartments: ${apartments}`);
+    console.log(`floors: ${floors}`);
+    console.log(`tier: ${tier}`);
+//validate inputs
+    if (isNaN(apartments) || isNaN(floors) || !['standard', 'premium', 'excelium'].includes(tier)){
+        return res.status(400).send('Invalid input');
+    }
+// define tier costs
+    const tierCosts = {
+        standard: 8000,
+        premium: 12000,
+        excelium: 15000,
+    };
+// calculate number of elevators needed
+    const elevators = Math.ceil(apartments / 6);
+
+// calculate final cost based on selected tier
+    const finalCost = elevators * tierCosts[tier];
+
+// return elevators needed and final cost
+    res.status(200).send({elevators, finalCost});
+
+});
+// end elevator calculations
+
 // feedback
 app.listen(3000, () => {
   console.log(` server listening on port ${3000} `)
