@@ -91,6 +91,29 @@ app.get('/calc-res', (req, res) => {
 });
 // end elevator calculations
 
+//set up contact us POST
+app.post('/contact-us', (req,res) => {
+    const { first_name, last_name, message } = req.body;
+
+    console.log(first_name);
+    console.log(last_name);
+    console.log(message);
+//log message
+console.log(` Message from ${first_name} ${last_name}: ${message} `);
+
+// validating data
+
+if (!first_name || !last_name || !message) {
+    return res.status(400).json({error:'All fields are required.'});
+}
+
+    res.status(201).json({
+        "First Name": first_name,
+        "Last Name": last_name,
+        "Message": message
+    });
+});
+
 // feedback
 app.listen(3000, () => {
   console.log(` server listening on port ${3000} `)
